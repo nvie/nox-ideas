@@ -1,4 +1,4 @@
-func sum(xs: List<Float>): Float {
+func sum(xs: Float[]): Float {
   return xs
     | []      -> 0
     | [x:xs]  -> x + sum(xs)
