@@ -1,0 +1,25 @@
+// import Abc (with capital A) imports an ADT type definition
+import List
+
+// import Abc, (Foo, Bar) will do the same, but also import Foo and Bar into
+// the module namespace, so you can avoid having to write Abc.Foo and Abc.Bar
+// and instead can use Foo and Bar directly
+import Maybe, (Just, Nothing)
+
+// Btw:
+// T[] is sugar for List<T>
+// T?  is sugar for Maybe<T>
+
+func first<T>(xs: T[]): T? {
+  return xs
+    | []      -> Nothing()    // Also considering `Nothing`
+    | [x:xs]  -> Just(x)      // Also considering `Just x`, and `Just { x }`
+}
+
+// T? is sugar for Maybe<T>
+func last<T>(xs: List<T>): T? {
+  return xs
+    | []      -> Nothing()
+    | [x:[]]  -> Just(x)
+    | [_:xs]  -> last(xs)
+}
