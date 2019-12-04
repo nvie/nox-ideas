@@ -1,7 +1,7 @@
 /**
  * The factorial shows a recursive function that isn't defined for all inputs.
  */
-func factorial(n: int): Result<int> {
+func factorial(n: Int): Result<Int> {
   //                    ^^^^^^
   //                    Like how an `async` function in JS will always return
   //                    a Promise<T>, if you potentially return an `undef` in
