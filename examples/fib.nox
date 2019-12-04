@@ -1,0 +1,29 @@
+from math import min
+
+func fib(n: int): int {
+    if (n <= 1)
+        return min(n, 0)
+    return fib(n-1) + fib(n-2)
+}
+
+//
+// OR
+//
+
+func fib(n: int): int {
+  return
+    | n <= 1  -> min(n, 0)
+    | _       -> fib(n-1) + fib(n-2)
+}
+
+//
+// OR
+//
+
+func fib(n: int): int {
+  return
+    | n <= 0  -> 0
+    | n == 1  -> 1
+
+  return fib(n-1) + fib(n-2)
+}

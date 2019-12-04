@@ -1,0 +1,5 @@
+func sum(xs: list<float>): float {
+  return xs
+    | []      -> 0
+    | [x:xs]  -> x + sum(xs)
+}
