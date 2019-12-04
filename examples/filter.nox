@@ -1,0 +1,15 @@
+// Fully imperative
+func filter(items: T[], pred: T -> Bool): T[] {
+  let result = []
+  for (item in items) {
+    if (pred(item)) {
+      result.append(item)
+    }
+  }
+  return result
+}
+
+// Thru list comprehensions
+func filter(items: T[], pred: T -> Bool): T[] {
+  return [x for x in items if pred(x)]
+}
