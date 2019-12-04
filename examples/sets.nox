@@ -1,0 +1,23 @@
+// Sugar:
+// x | y is sugar for Set.union(s1, s2)
+// x & y is sugar for Set.intersection(s1, s2)
+
+// sugar
+func union(s1: Set<T>, s2: Set<T>): Set<T> {
+  return s1 | s2
+}
+
+// with set comprehensions
+func union(s1: Set<T>, s2: Set<T>): Set<T> {
+  // runtime optimization
+  (smallest, largest) =
+    | s1.size < s2.size -> (s1, s2)
+    | _                 -> (s2, s1)
+
+  // set comprehension
+  return Set(x for x in smallest if x in largest)
+}
+
+func intersection(s1: Set<T>, s2: Set<T>): Set<T> {
+  return s1 & s2
+}
