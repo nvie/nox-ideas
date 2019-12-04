@@ -1,0 +1,13 @@
+// Fully imperative
+func map(items: T[], mapper: T -> V): V[] {
+  let result = []
+  for (item in items) {
+    result.append(mapper(item))
+  }
+  return result
+}
+
+// Thru list comprehensions
+func map(items: T[], mapper: T -> V): V[] {
+  return [mapper(item) for item in items]
+}
