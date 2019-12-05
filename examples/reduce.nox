@@ -1,7 +1,7 @@
 //
 // currying thru qmark op?
-// sum = reduce (+) 0 xs  ???
 //
+// import Operator
 // func sum = reduce(Operator.add, 0, ?)
 // func half = Operator.div(?, 2)
 //
