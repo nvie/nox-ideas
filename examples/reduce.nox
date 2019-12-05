@@ -1,5 +1,38 @@
-func sum(xs: Float[]): Float {
+// currying thru qmark op?
+// sum = reduce (+) 0 xs  ???
+
+
+// T = payload
+// V = aggregated output type
+func reduce(xs: T[], agg: (T, V) -> V, init: V): V {
   return xs
-    | []      -> 0
-    | [x:xs]  -> x + sum(xs)
+    | []     -> init
+    | [x:xs] -> agg(x, reduce(xs, agg, init))
 }
+
+
+func foldl = reduce
+
+
+// T = payload
+// V = aggregated output type
+func foldr(agg: (V, T) -> V, init: V, items: T[]): V {
+  return xs
+    | [] -> init
+  
+  // Tuple unpacking
+  (x, leads) = xs.poplast()
+  return agg(x, foldr(agg, ...))
+}
+
+
+func sum(xs: Float[]): Float {
+  return
+    // T=number, V=number
+    xs.reduce((x, y) => x + y, 0)
+}
+
+
+//func sum_by(items: T[], key: T -> V): V {
+//  return reduce(items, (x, xs) => x + sum_by(xs, key), 0)
+//}
