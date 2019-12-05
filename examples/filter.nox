@@ -9,7 +9,41 @@ func filter(items: T[], pred: T -> Bool): T[] {
   return result
 }
 
+
 // Thru list comprehensions
 func filter(items: T[], pred: T -> Bool): T[] {
   return [x for x in items if pred(x)]
+}
+
+
+// Or full FP style (enables tail recursion?)
+func filter(items: T[], pred: T -> Bool): T[] {
+  return items
+    | [] -> []
+    | [x:xs] -> pred(x) ? [x:filter(items, pred)] : filter(items, pred)
+}
+
+
+// Or hybrid style
+func filter(items: T[], pred: T -> Bool): T[] {
+  return items
+    | [] -> []
+    | [x:xs] ->
+        {
+          tail = filter(xs, pred)
+          return pred(x) ? [x:tail] : tail
+        }
+}
+
+
+// Or hybrid style
+func filter(items: T[], pred: T -> Bool): T[] {
+  return items
+    | [] -> []
+    | [x:xs] ->
+        pred(x)
+          | True -> [x:tail]
+          | False -> tail
+          where
+            tail = filter(xs, pred)
 }
