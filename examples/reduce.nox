@@ -11,8 +11,8 @@
 // V = aggregated output type
 func reduce(xs: T[], agg: (T, V) -> V, init: V): V {
   return xs
-    | []     -> init
-    | [x:xs] -> agg(x, reduce(xs, agg, init))
+    | []        -> init
+    | [x, ..xs] -> agg(x, reduce(xs, agg, init))
 }
 
 
@@ -26,7 +26,7 @@ func foldr(agg: (V, T) -> V, init: V, items: T[]): V {
     | [] -> init
   
   // Tuple unpacking
-  (x, leads) = xs.poplast()
+  (..leads, x) = xs
   return agg(x, foldr(agg, ...))
 }
 
@@ -36,8 +36,3 @@ func sum(xs: Float[]): Float {
     // T=number, V=number
     xs.reduce((x, y) => x + y, 0)
 }
-
-
-//func sum_by(items: T[], key: T -> V): V {
-//  return reduce(items, (x, xs) => x + sum_by(xs, key), 0)
-//}
