@@ -12,14 +12,19 @@ import Maybe, (Just, Nothing)
 
 func first<T>(xs: T[]): T? {
   return xs
-    | []      -> Nothing()    // Also considering `Nothing`
-    | [x:xs]  -> Just(x)      // Also considering `Just x`, and `Just { x }`
+    | []         -> Nothing()    // Also considering `Nothing`
+    | [x, ..xs]  -> Just(x)      // Also considering `Just x`, and `Just { x }`
 }
 
 // T? is sugar for Maybe<T>
-func last<T>(xs: List<T>): T? {
+func last<T>(xs: T[]): T? {
   return xs
-    | []      -> Nothing()
-    | [x:[]]  -> Just(x)
-    | [_:xs]  -> last(xs)
+    | []            -> Nothing()
+    | [x]           -> Just(x)
+    | [_, x]        -> Just(x)
+    | [_, _, x]     -> Just(x)
+    | [_, _, _, x]  -> Just(x)
+    | [_, ..xs]     -> last(xs)  // Convenience
+    | [_, _, ..xs, _, x]   // Side note: you can go pretty wild with the pattern
+        -> Just(x)         // matching, but there can be at most one spread
 }

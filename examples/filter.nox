@@ -20,7 +20,7 @@ func filter(items: T[], pred: T -> Bool): T[] {
 func filter(items: T[], pred: T -> Bool): T[] {
   return items
     | [] -> []
-    | [x:xs] -> pred(x) ? [x:filter(items, pred)] : filter(items, pred)
+    | [x, ..y] -> pred(x) ? [x, ..filter(items, pred)] : filter(items, pred)
 }
 
 
@@ -28,7 +28,7 @@ func filter(items: T[], pred: T -> Bool): T[] {
 func filter(items: T[], pred: T -> Bool): T[] {
   return items
     | [] -> []
-    | [x:xs] ->
+    | [x, ..xs] ->
         {
           tail = filter(xs, pred)
           return pred(x) ? [x:tail] : tail
@@ -40,7 +40,7 @@ func filter(items: T[], pred: T -> Bool): T[] {
 func filter(items: T[], pred: T -> Bool): T[] {
   return items
     | [] -> []
-    | [x:xs] ->
+    | [x, ..xs] ->
         pred(x)
           | True -> [x:tail]
           | False -> tail
