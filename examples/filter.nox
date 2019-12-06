@@ -1,6 +1,6 @@
 // Fully imperative
 func filter(items: T[], pred: T -> Bool): T[] {
-  let result = []
+  mut result = []
   for (item in items) {
     if (pred(item)) {
       result.append(item)
