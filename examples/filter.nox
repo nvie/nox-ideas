@@ -27,22 +27,9 @@ func filter(items: T[], pred: T -> Bool): T[] {
 // Or hybrid style
 func filter(items: T[], pred: T -> Bool): T[] {
     return items
-      | []        -> []
-      | [x, ..xs] -> {
-            tail = filter(xs, pred)
-            return pred(x) ? [x:tail] : tail
-        }
-}
-
-
-// Or hybrid style
-func filter(items: T[], pred: T -> Bool): T[] {
-    return items
         | []        -> []
-        | [x, ..xs] ->
-              pred(x)
-                  | True -> [x:tail]
-                  | False -> tail
-                  where
-                      tail = filter(xs, pred)
+        | [x, ..xs] -> {
+              lazy tail = filter(xs, pred)
+              return pred(x) ? [x:tail] : tail
+          }
 }
