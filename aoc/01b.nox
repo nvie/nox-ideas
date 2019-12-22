@@ -1,5 +1,5 @@
 import { print } from io
-import math from math
+import { floor, max, sum } from math
 
 
 masses = `
@@ -18,12 +18,12 @@ masses = `
 
 
 func get_fuel(mass: Int): Int {
-    return math.max(0, math.floor(mass / 3) - 2)
-        | 0 -> 0
+    return max(0, floor(mass / 3) - 2)
+        | 0    -> 0
         | fuel -> fuel + get_fuel(fuel)
 }
 
 
-func main() {
-    print(`Total is {sum(masses.map(get_fuel))}`)
+io func main() {
+    print(`Total is { sum(masses.map(get_fuel)) }`)
 }

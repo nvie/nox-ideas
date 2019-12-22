@@ -20,5 +20,4 @@ masses = `
 fuels = masses.map(mass => floor(mass / 3) - 2)
 total = sum(fuels)
 
-
-print(`The total is: {total}`);
+print(`The total is: { [foo, '2', 2 + 3, doSomething([`a {2}`]), 45] }`)
