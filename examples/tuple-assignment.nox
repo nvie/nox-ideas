@@ -1,0 +1,14 @@
+func gcd(x: Int, y: Int): Int {
+    while (y != 0) {
+        x, y = y, x % y
+    }
+    return x
+}
+
+
+func gcd(x: Int, y: Int): Int {
+    return
+      | (x, 0)  -> x
+      | (x, y)  -> gcd(y, x % y)
+}
+
