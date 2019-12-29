@@ -8,7 +8,7 @@
 
 generator func foo(): Generator<Int> {
   mut n = 0
-  for (;;) {
+  while (true) {
     yield n++
   }
 }
