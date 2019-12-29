@@ -6,7 +6,7 @@
 // Dict(x: 1 for x in 3..6) or {x: 1 for x in 3..6} would produce {3:1,4:1,5:1,6:1}
 
 
-generator func foo(): Iterable<Int> {
+generator func foo(): Generator<Int> {
   mut n = 0
   for (;;) {
     yield n++
@@ -14,7 +14,7 @@ generator func foo(): Iterable<Int> {
 }
 
 
-generator func range(start: Int, end: Int): Iterable<Int> {
+generator func range(start: Int, end: Int): Generator<Int> {
   mut x = start
   while (x <= end) {
     yield x++
