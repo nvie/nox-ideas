@@ -1,0 +1,27 @@
+// Currying is explicit, but easy
+
+// sum :: (x: Int, y: Int) => Int
+func sum(x, y) {
+    return x + y
+}
+
+plus3: (y: Int) => Int = curry(sum, 3)
+eight: () => Int = curry(sum, 3, 5)
+
+
+// subtract :: (x: Int, y: Int) => Int
+func subtract(x, y) {
+    return x - y
+}
+
+// Curry with named arguments
+negate: (y: Int) => Int = curry(subtract, 0)  // same as curry(subtract, x=0)
+minus2: (x: Int) => Int = curry(subtract, y=2)
+
+// Syntactic sugar for currying params other than the last can be achieved with
+// a `?` positional param
+negate: (y: Int) => Int = subtract(0, ?)
+minus3: (x: Int) => Int = subtract(?, 3)
+
+// You can use multiple, too.  In this case that would be the same.
+subtract(?, ?) == subtract
