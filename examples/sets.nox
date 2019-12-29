@@ -15,7 +15,7 @@ func union(s1: Set<T>, s2: Set<T>): Set<T> {
     | _                 -> (s2, s1)
 
   // set comprehension
-  return Set(x for x in smallest if x in largest)
+  return { for (x in smallest) => if (x in largest) => x }
 }
 
 func intersection(s1: Set<T>, s2: Set<T>): Set<T> {
