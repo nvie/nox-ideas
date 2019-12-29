@@ -17,8 +17,8 @@ func map(items: T[], mapper: T -> V): V[] {
 }
 
 
-even_numbers = (for (x in count()) => x % 2 == 0 => x)
-odd_numbers = (for (x in count()) => x % 2 != 0 => x)
+even_numbers = (for x in count() if x % 2 == 0 yield x)
+odd_numbers  = (for x in count() if x % 2 != 0 yield x)
 
 
 func flatmap(items: Iterable<Iterable<T>>, mapper: T -> Iterable<V>): Generator<T> {
