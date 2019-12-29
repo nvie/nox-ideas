@@ -1,5 +1,5 @@
 // Fully imperative
-func map(items: T[], mapper: T -> V): V[] {
+func map(items: Iterable<T>, mapper: T -> V): V[] {
   let result = []
   for (item in items) {
     result.append(mapper(item))
@@ -7,7 +7,22 @@ func map(items: T[], mapper: T -> V): V[] {
   return result
 }
 
+
 // Thru list comprehensions
 func map(items: T[], mapper: T -> V): V[] {
-  return [mapper(item) for item in items]
+  return [for (item in items) => mapper(item)]
+}
+
+
+func flatmap(items: Iterable<Iterable<T>>, mapper: T -> Iterable<V>): Generator<T> {
+  return (for (item in items) =>
+              for (x in mapper(item)) =>
+                  x)
+}
+
+
+func flatmap(items: Iterable<Iterable<T>>, mapper: T -> Iterable<V>): T[] {
+  return [for (item in items) =>
+              for (x in mapper(item)) =>
+                  x]
 }
