@@ -7,8 +7,7 @@ func gcd(x: Int, y: Int): Int {
 
 
 func gcd(x: Int, y: Int): Int {
-    return
+    return (x, y)
       | (x, 0)  -> x
       | (x, y)  -> gcd(y, x % y)
 }
-
