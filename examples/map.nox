@@ -1,3 +1,6 @@
+import { count } from itertools
+
+
 // Fully imperative
 func map(items: Iterable<T>, mapper: T -> V): V[] {
   let result = []
@@ -12,6 +15,10 @@ func map(items: Iterable<T>, mapper: T -> V): V[] {
 func map(items: T[], mapper: T -> V): V[] {
   return [for (item in items) => mapper(item)]
 }
+
+
+even_numbers = (for (x in count()) => x % 2 == 0 => x)
+odd_numbers = (for (x in count()) => x % 2 != 0 => x)
 
 
 func flatmap(items: Iterable<Iterable<T>>, mapper: T -> Iterable<V>): Generator<T> {
