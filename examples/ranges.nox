@@ -1,0 +1,56 @@
+// Ranges are syntactic sugar for the range() function
+
+import { iterate, range } from iteration
+
+// The range() function from itertools has the following signatures:
+// range()
+// range(start)
+// range(start, end)
+// range(start, end, step)
+//
+// When `step` is 0, this will return an infinite list of `start`, repeating.
+// When `step` is positive, this will return incrementing values until `end`
+// (exclusive).  When `step` is negative, this will return decrementing values
+// until `end` (exclusive).
+
+(0..) == range()         // 0, 1, 2, 3, ... (to infinity and beyond)
+(3..) == range(3)        // 3, 4, 5, 6, ... (to infinity and beyond)
+(0..8) == range(0, 8)    // 0, 1, 2, 3, 4, 5, 6, 7
+(3..10) == range(3, 10)  // 3, 4, 5, 6, 7, 8, 9
+
+
+// There is no sugar for the `step` param, so in those cases you'll have to use
+// the long form:
+
+range(3, 10, 2)   // 3, 5, 7, 9
+range(10, 3, -1)  // 10, 9, 8, 7, 6, 5, 4
+
+
+// Like any generator, you can decide what collection type to "flow" the
+// generator into if you want to consume it:
+[0..7] == List(0..7) == [0, 1, 2, 3, 4, 5, 6]
+{0..7} == Set(0..7) == {0, 1, 2, 3, 4, 5, 6}
+Tuple(0..7) == (0, 1, 2, 3, 4, 5, 6, 7)
+
+// Note that (0..7) is just the expression `0..7` wrapped in parens, which does
+// not mean "tuple".  A tuple is defined by the comma operator, not its parens.
+(0..7) != Tuple(0..7)  // A generator is not a tuple
+
+
+// Ranges can be open-ended.  Open-ended ranges are only allowed in
+// comprehensions, since they are infinite, and building lists or sets from
+// them would consume up all memory (and more)
+[3..]  // not allowed
+{3..}  // not allowed
+
+// Using infinite ranges to build infinite generators is fine, though.
+// Like this infinite list of all even numbers larger than 3, squared:
+(x * x for x in 3.. if x % 2 == 0)
+
+
+// You cannot use ranges with floats.  To build a range of floats, you can use
+// a list comprehension, though:
+[x / 10 for x in 0..10] == [0.0, 0.1, 0.2, ..., 0.9]
+
+// Or use the built-in iterate() function
+take(iterate(0.0, x => x + 0.1), 10)
