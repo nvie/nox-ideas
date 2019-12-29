@@ -12,7 +12,7 @@ func filter(items: T[], pred: T -> Bool): T[] {
 
 // Thru list comprehensions
 func filter(items: T[], pred: T -> Bool): T[] {
-    return [x for x in items if pred(x)]
+    return [for (x in items) => if pred(x) => x]
 }
 
 
