@@ -7,7 +7,7 @@ func factorial(n: Int): Result<Int> {
     //                  a Promise<T>, if you potentially return an `undef` in
     //                  the body of the function, this will implicitly make the
     //                  return type of the function a Result<T, Undef>
-    return
-        | n < 1  -> undef
-        | n >= 0 -> n * factorial(n)
+    return (n >= 0)
+        ? n * factorial(n)
+        : undef
 }
