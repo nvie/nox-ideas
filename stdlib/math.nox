@@ -1,0 +1,11 @@
+export
+func floor(f: Float): Int { /* internal */ }
+
+
+export
+func max<T: Float>(..xs: T[]): T { /* internal */ }
+
+
+export
+sum :: <T: Float>(..T[]) => T
+sum = reduce(?, (x, y) => x + y, 0)

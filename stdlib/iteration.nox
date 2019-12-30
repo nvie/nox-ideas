@@ -1,0 +1,25 @@
+export
+generator func iterate(start: T, f: T => T): Generator<T> {
+    mut x = start
+    yield x
+    forever {
+        x = f(x)
+        yield x
+    }
+}
+
+
+export
+func count(start: Int, step: Int): Generator<Int> {
+    return iterate(start, x => x + step)
+}
+
+
+export
+generator func cycle(alts: Iterable[]): Generator<T> {
+    alts = List(alts)
+    mut index = 0
+    forever {
+        yield alts[index++]
+    }
+}
