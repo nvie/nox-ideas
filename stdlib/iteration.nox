@@ -16,10 +16,36 @@ func count(start: Int, step: Int): Generator<Int> {
 
 
 export
-generator func cycle(alts: Iterable[]): Generator<T> {
+generator func cycle(alts: Iterable<T>): Generator<T> {
     alts = List(alts)
     mut index = 0
     forever {
         yield alts[index++]
+    }
+}
+
+
+export
+generator func repeat(value: T): Generator<T> {
+    forever {
+        yield value
+    }
+}
+
+
+export
+generator func take(n: Int, iterable: Iterable<T>): Generator<T> {
+    it = iter(iterable)
+    mut counter = n
+    while (counter-- > 0) {
+        // TODO: Figure out a good hybrid syntax for when the results are
+        // statements, not expressions
+        result = it.next()
+        if (result ?= Just value) {  // ?= as a pattern matching operator?
+            yield value
+        } else /* (result ?= Nothing) */ {
+            /* Iterable exhausted, quit early */
+            return 
+        }
     }
 }
