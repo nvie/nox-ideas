@@ -1,0 +1,26 @@
+export
+func foldl(iterable: Iterable<T>, f: (R, T) => R): R? {
+    return (iterable)
+        | [] -> Nothing
+        | [head, ..tail] -> Just(foldl(tail, f, head))
+}
+
+
+export
+func foldl(iterable: Iterable<T>, f: (R, T) => R, start: R): R {
+    return (iterable)
+        | [] -> start
+        | [head, ..tail] -> foldl(tail, f, f(start, head))
+}
+
+
+export
+func foldr(iterable: Iterable<T>, f: (T, R) => R, start: R): R {
+    return (iterable)
+        | [] -> start
+        | [head] -> f(head, start)
+        | [head, ..tail] -> f(head, foldr(tail, f, start))
+}
+
+
+reduce = foldl

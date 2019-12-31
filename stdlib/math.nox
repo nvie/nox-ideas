@@ -2,8 +2,51 @@ export
 func floor(f: Float): Int { /* internal */ }
 
 
+/**
+ * Helper to pick(), which is more efficient because it enables tail recursion.
+ */
+func pick_<T: Comparable>(winner: T, values: T[]): T {
+    return (values)
+        | []           -> winner
+        | [x, ..tail]  -> {
+            new_winner = (x > winner) ? x : winner
+            return max_(new_winner, tail)
+        }
+}
+
+
+func max_<T: Comparable>(winner: T, values: T[]): T {
+    if (values ?= [x, ..tail]) {
+        new_winner = (x > winner) ? x : winner
+        return max_(new_winner, tail)
+    } else {
+        return winner
+    }
+}
+
+
 export
-func max<T: Float>(..xs: T[]): T { /* internal */ }
+func max<T: Comparable>(..xs: T[]): T? {
+
+    /* This is just a one-line comment */
+    foo
+
+    /**
+     * This is a multi-line
+     * comment string
+     */
+    func max_() {
+        foo
+    }
+
+    return (xs)
+        | []        -> Nothing
+        | [x]       -> Just x
+        | [x, tail] -> {
+            y = max(tail)
+            return (x < y) ? y : x
+        }
+}
 
 
 export
