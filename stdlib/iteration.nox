@@ -1,3 +1,53 @@
+// import { identity } from core
+
+
+type Bool = False | True
+type Pred<T> = T => Bool
+
+
+identity: T => T = x => x
+
+
+export
+func all(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
+    for (item in iterable) {
+        if (!pred(item)) {
+            return False
+        }
+    }
+    return True
+}
+
+
+export
+func any(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
+    for (item in iterable) {
+        if (pred(item)) {
+            return True
+        }
+    }
+    return False
+}
+
+
+export
+func contains(haystack: Iterable<T>, needle: T): Bool {
+    // return any(haystack, curry(Operator.==, needle))
+    // return any(haystack, Operator.==(?, needle))
+    // return any(haystack, ? == needle)
+    return any(haystack, x => x == needle)
+}
+
+
+export
+generator func enumerate(iterable: Iterable<T>, start: Int = 0): Generator<(Int, T)> {
+    mut index = start
+    for (item in iterable) {
+        yield (index++, item)
+    }
+}
+
+
 export
 generator func iterate(start: T, f: T => T): Generator<T> {
     mut x = start
@@ -26,9 +76,31 @@ generator func cycle(alts: Iterable<T>): Generator<T> {
 
 
 export
-generator func repeat(value: T): Generator<T> {
-    forever {
-        yield value
+func range(start: Int = 0, end: Int?, step: Int = 1): Generator<Int> {
+    if (step == 0) {
+        return repeat(start)
+    }
+
+    counter = count(start, step)
+    return end
+        | Nothing  -> counter
+        | Just end -> {
+            pred = (step > 0)
+                ? n => n < end
+                : n => n > end
+            return takewhile(counter, pred)
+        }
+}
+
+
+export
+generator func repeat(value: T, times: Int?): Generator<T> {
+    lazy gen = (value for _ in range())
+
+    if (times ?= Just n) {
+        return take(n, gen)
+    } else {
+        return gen
     }
 }
 
@@ -41,11 +113,22 @@ generator func take(n: Int, iterable: Iterable<T>): Generator<T> {
         // TODO: Figure out a good hybrid syntax for when the results are
         // statements, not expressions
         result = it.next()
-        if (result ?= Just value) {  // ?= as a pattern matching operator?
+        if (it.next() ?= Just value) {  // ?= as a pattern matching operator?
             yield value
         } else /* (result ?= Nothing) */ {
             /* Iterable exhausted, quit early */
             return 
         }
+    }
+}
+
+
+export
+generator func takewhile(iterable: Iterable<T>, pred: Pred<T>): Generator<T> {
+    for (item in iterable) {
+        if (!pred(item)) {
+            return
+        }
+        yield item
     }
 }
