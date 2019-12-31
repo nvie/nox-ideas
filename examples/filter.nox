@@ -29,7 +29,7 @@ func filter(items: T[], pred: T -> Bool): T[] {
     return items
         | []        -> []
         | [x, ..xs] -> {
-              lazy tail = filter(xs, pred)
+              tail = filter(xs, pred)
               return pred(x) ? [x:tail] : tail
           }
 }
