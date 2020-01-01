@@ -1,54 +1,8 @@
-export
-func floor(f: Float): Int { /* internal */ }
+import { foldl } from core
+import { floor } from _internal
 
 
-/**
- * Helper to pick(), which is more efficient because it enables tail recursion.
- */
-func pick_<T: Comparable>(winner: T, values: T[]): T {
-    return (values)
-        | []           -> winner
-        | [x, ..tail]  -> {
-            new_winner = (x > winner) ? x : winner
-            return max_(new_winner, tail)
-        }
-}
-
-
-func max_<T: Comparable>(winner: T, values: T[]): T {
-    if (values ?= [x, ..tail]) {
-        new_winner = (x > winner) ? x : winner
-        return max_(new_winner, tail)
-    } else {
-        return winner
-    }
-}
-
-
-export
-func max<T: Comparable>(..xs: T[]): T? {
-
-    /* This is just a one-line comment */
-    foo
-
-    /**
-     * This is a multi-line
-     * comment string
-     */
-    func max_() {
-        foo
-    }
-
-    return (xs)
-        | []        -> Nothing
-        | [x]       -> Just x
-        | [x, tail] -> {
-            y = max(tail)
-            return (x < y) ? y : x
-        }
-}
-
-
-export
-sum :: <T: Float>(..T[]) => T
-sum = reduce(?, (x, y) => x + y, 0)
+export floor
+export min = foldl(?, (x, y) => x < y ? x : y)
+export max = foldl(?, (x, y) => x > y ? x : y)
+export sum = foldl(?, (x, y) => x + y, 0)
