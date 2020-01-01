@@ -8,6 +8,20 @@ type Pred<T> = T => Bool
 identity: T => T = x => x
 
 
+func first(iterable: Iterable<T>): T? {
+  return (iterable)
+    | []       -> Nothing
+    | [x, ..]  -> Just x
+}
+
+
+func last(iterable: Iterable<T>): T? {
+  return (iterable)
+    | []       -> Nothing
+    | [.., x]  -> Just x
+}
+
+
 export
 func all(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
     for (item in iterable) {

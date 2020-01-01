@@ -15,9 +15,10 @@ func fib(n: Int): Int {
 //
 
 func fib(n: Int): Int {
-    return
-        | n <= 1  -> min(n, 0)
-        | _       -> fib(n - 1) + fib(n - 2)
+    return (n)
+        | n if n <= 0 -> 0
+        | 1 -> 1
+        | _ -> fib(n - 1) + fib(n - 2)
 }
 
 

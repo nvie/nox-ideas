@@ -1,5 +1,6 @@
 import { foldl } from core
 import { ceil, floor } from _internal
+import operator from operator
 
 
 export ceil
@@ -8,10 +9,18 @@ export ceil
 export floor
 
 
-export min = foldl(?, (x, y) => x < y ? x : y)
+smallest =
+    (x, y) => x < y ? x : y
 
 
-export max = foldl(?, (x, y) => x > y ? x : y)
+largest =
+    (x, y) => x > y ? x : y
 
 
-export sum = foldl(?, (x, y) => x + y, 0)
+export min = foldl(?, smallest)
+
+
+export max = foldl(?, largest)
+
+
+export sum = foldl(?, operator.add, 0)

@@ -3,42 +3,68 @@
 Pattern matching is supported via the following syntax:
 
     (expr)
-        | pattern_1 -> expr1
-        | pattern_2 -> expr2
+        | pattern1 -> expr1
+        | pattern2 -> expr2
 
 Patterns do two things: they check the shape of the value, and "unpack" nested
 values by assigning them to (new) local variables that then can be used inside
 the scopes on the right hand sides.
 
+For example, matching Ints:
+
+    (value)
+        | 0 -> 0
+        | 1 -> 1
+        | _ -> 2
+
+
+Matching strings:
+
+    (value)
+        | 'foo' -> 1
+        | 'bar' -> 2
+        | _ -> 3
+
+
+Matching booleans:
+
+    (value)
+        | True -> 1
+        | False -> 0
+
+    // Although you'll typically want to write that as:
+    (value) ? 1 : 0
+
+You can also unpack enums/ADTs with this:
+
+    (Just(3))
+        | Just(x)  -> 'Just #{x}'
+        | Nothing() -> 'Nothing'
+
+
 For example, matching lists:
 
-    [1, 2, 3]
-        | []           -> "Will NOT match"
-        | [x]          -> "Will NOT match"
-        | [x, y]       -> "Will NOT match"
-        | [x, y, z]    -> "Will match"
-        | [_, _, _]    -> "Will match"
-        | [x, y, z, _] -> "Will NOT match"
-        | [x, ..ys]    -> "Will match"
-        | [x, .._]     -> "Will match"
-        | _            -> "Will match"
+    ([1, 2, 3])
+        | []           -> 'Will NOT match'
+        | [x]          -> 'Will NOT match'
+        | [x, y]       -> 'Will NOT match'
+        | [x, y, z]    -> 'Will match'
+        | [_, _, _]    -> 'Will match'
+        | [x, y, z, _] -> 'Will NOT match'
+        | [x, ..ys]    -> 'Will match'
+        | [x, .._]     -> 'Will match'
+        | _            -> 'Will match'
 
 
 You can also match tuples:
 
     (1, 'hai')
-        | (_, _, _)    -> "Will NOT match"
-        | (_, _)       -> "Will match"
-        | (x, _) if x > 0 -> "Will match"
-        | (x, _) if x < 0 -> "Will NOT match"
-        | _            -> "Will match"
+        | (_, _, _)    -> 'Will NOT match'
+        | (_, _)       -> 'Will match'
+        | (x, _) if x > 0 -> 'Will match'
+        | (x, _) if x < 0 -> 'Will NOT match'
+        | _            -> 'Will match'
 
-
-
-
-## Exhaustive or not?
-
-TBD: Should the pattern list be exhaustively specified?
 
 
 
@@ -46,7 +72,8 @@ TBD: Should the pattern list be exhaustively specified?
 
 Pattern matching on iterables is especially interesting / advanced.  Since an
 iterable must be consumed before it can be tested, the order in which the
-patterns are executed is crucial.
+patterns are executed is crucial, and the act of pattern matching on an
+iterable mutates it.
 
 Here's the reference implementation for `foldr`:
 
