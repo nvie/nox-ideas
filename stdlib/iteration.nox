@@ -1,11 +1,8 @@
-// import { identity } from core
+import { identity } from operators
 
 
 type Bool = False | True
 type Pred<T> = T => Bool
-
-
-identity: T => T = x => x
 
 
 func first(iterable: Iterable<T>): T? {

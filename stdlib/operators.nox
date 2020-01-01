@@ -1,0 +1,13 @@
+export identity = (x) => x
+
+export eq       = (x, y) => (x == y)
+export neq      = (x, y) => (x != y)
+export lt       = (x, y) => (x < y)
+export lte      = (x, y) => (x <= y)
+export gt       = (x, y) => (x > y)
+export gte      = (x, y) => (x >= y)
+
+export add      = (x, y) => (x + y)
+export subtract = (x, y) => (x - y)
+export multiply = (x, y) => (x * y)
+export divide   = (x, y) => (x / y)
