@@ -1,8 +1,17 @@
 import { foldl } from core
-import { floor } from _internal
+import { ceil, floor } from _internal
+
+
+export ceil
 
 
 export floor
+
+
 export min = foldl(?, (x, y) => x < y ? x : y)
+
+
 export max = foldl(?, (x, y) => x > y ? x : y)
+
+
 export sum = foldl(?, (x, y) => x + y, 0)
