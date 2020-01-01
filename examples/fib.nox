@@ -20,16 +20,3 @@ func fib(n: Int): Int {
         | 1 -> 1
         | _ -> fib(n - 1) + fib(n - 2)
 }
-
-
-//
-// OR
-//
-
-func fib(n: Int): Int {
-    return
-        | n <= 0  -> 0
-        | n == 1  -> 1
-
-    return fib(n - 1) + fib(n - 2)
-}

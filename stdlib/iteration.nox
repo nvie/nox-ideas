@@ -127,7 +127,7 @@ generator func take(n: Int, iterable: Iterable<T>): Generator<T> {
             yield value
         } else /* (result ?= Nothing) */ {
             /* Iterable exhausted, quit early */
-            return 
+            return
         }
     }
 }
