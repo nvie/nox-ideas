@@ -2,10 +2,40 @@
 // * Lists (aka js arrays)
 // * Tuples
 // * Sets
+// * Records
 // * Dicts  (aka simple js objects)
 
 // For sanity, they always remember their input order!
 
-// equality?
-(1, 2) == [1, 2]
-{1, 2} == {1: 1, 2: 2}
+
+// Tuples are heterogeneous
+// NOTE: 0-, or 1-tuples don't exist
+                  // Type:
+(1, 2)            // (Int, Int)
+(1, 'foo', True)  // (Int, String, Bool)
+
+
+// Lists are homogeneous
+[]               // T[]
+[1, 2]           // Int[]
+['foo', 'bar']   // String[]
+['foo', 3]       // (String | Int)[]
+
+
+// Sets are homogeneous
+#{}              // Set<T>
+#{1}             // Set<Int>
+#{'foo', 'bar'}  // Set<String>
+
+
+// Records
+// An "empty" record does not exist
+{ x=0, y=0 }                      // { x=Int, y=Int }
+{ foo='hello', bar=3, qux=True }  // { foo=String, bar=Int, qux=Bool }
+
+
+// Dicts have homogeneous key and value "sides"
+{ }                     // Dict<T, V>
+{ 'one': 1, 'two': 2 }  // Dict<String, Number>
+{ 1: 'one', 2: 'two' }  // Dict<Number, String>
+
