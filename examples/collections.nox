@@ -2,8 +2,8 @@
 // * Lists (aka js arrays)
 // * Tuples
 // * Sets
-// * Records
-// * Dicts  (aka simple js objects)
+// * Records  (aka simple objects with fixed properties/types)
+// * Dicts  (aka lookup tables)
 
 // For sanity, they always remember their input order!
 
