@@ -29,7 +29,7 @@ range(10, 3, -1)  // 10, 9, 8, 7, 6, 5, 4
 // Like any generator, you can decide what collection type to "flow" the
 // generator into if you want to consume it:
 [0..7] == List(0..7) == [0, 1, 2, 3, 4, 5, 6]
-{0..7} == Set(0..7) == {0, 1, 2, 3, 4, 5, 6}
+#{0..7} == Set(0..7) == #{0, 1, 2, 3, 4, 5, 6}
 Tuple(0..7) == (0, 1, 2, 3, 4, 5, 6, 7)
 
 // Note that (0..7) is just the expression `0..7` wrapped in parens, which does
@@ -41,7 +41,7 @@ Tuple(0..7) == (0, 1, 2, 3, 4, 5, 6, 7)
 // comprehensions, since they are infinite, and building lists or sets from
 // them would consume up all memory (and more)
 [3..]  // not allowed
-{3..}  // not allowed
+#{3..}  // not allowed
 
 // Using infinite ranges to build infinite generators is fine, though.
 // Like this infinite list of all even numbers larger than 3, squared:
