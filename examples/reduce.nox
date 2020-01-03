@@ -24,7 +24,7 @@ func foldl = reduce
 func foldr(agg: (V, T) -> V, init: V, items: T[]): V {
   return xs
     | [] -> init
-  
+
   // Tuple unpacking
   (..leads, x) = xs
   return agg(x, foldr(agg, ...))
