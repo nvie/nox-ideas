@@ -1,0 +1,93 @@
+import { gcd } from math
+
+
+/**
+ * Here, we define a custom type called "Fraction", which internally keeps
+ * track of two integers, representing a mathematical fraction:
+ *
+ * Think:
+ *
+ *    x
+ *   ---
+ *    y
+ *
+ * For example:
+ *     3/4  (= 0.75)
+ *     4/10 (= 0.4)
+ *     42/1 (= 42)
+ *
+ */
+type Fraction =
+    | Fraction { x = Int, y = Int }
+    implements (Hashable, Eq, Cmp, Str, Num, Truthiness)
+//  ^^^^^^^^^^
+//  Not super sure about this syntax yet, but the core idea is that you
+//  can express common language "interfaces" that it implements.  For
+//  example, implementing Ord will enable comparing two Fractions using
+//  the <, >, <=, >= operators.  Also, a List<Fraction> can be sorted.
+//  Similarly, defining Hashable and Eq will enable Fractions to be used
+//  as Dict keys.
+//  Defining Str will enable print(fraction), or `#{frac} is a fraction`
+//  Defining Num will enable comparison against integers or floats, for
+//  example: 0.5 < Fraction(2, 5)
+//  Lastly, Truthiness enables testing for truthiness, like `if Fraction(1, 2)`
+
+
+/**
+ * Note that Fraction is an opaque type: it's only constructor (also
+ * called Fraction) is not exported from this module, so the only way to
+ * obtain this value is by using this constructor function.  This ensures
+ * we can assert the y value to be != 0.
+ */
+export func Fraction(x: Int, y: Int): Fraction {
+    assert(self.y != 0, 'invalid fraction')
+    return Fraction({ x, y })
+}
+
+
+/**
+ * A Fraction specific method.
+ */
+@on Fraction
+func simplify(self: Fraction): Fraction {
+    common = gcd(self.x, self.y)
+    return Fraction(self.x / common, self.y / common)
+}
+
+
+// Could/should be derived automatically for every type?
+@on Fraction // for Hashable
+func hash(self: Fraction): Int {
+    return hash(self.x) ^ hash(self.y)
+}
+
+
+// Could/should be derived automatically for every type?
+@on Fraction // for Eq
+func eq(self: Fraction, other: Fraction): Bool {
+    return self.x == other.x && self.y == other.y
+}
+
+
+@on Fraction // for Cmp
+func lt(self: Fraction, other: Fraction): Bool {
+    return self.to_number() < other.to_number()
+}
+
+
+@on Fraction // for Str
+func to_string(self: Fraction): String {
+    return `#{self.x}/#{self.y}`
+}
+
+
+@on Fraction // for Num
+func to_number(self: Fraction): Float {
+    return self.x / self.y
+}
+
+
+@on Fraction // for Truthiness
+func truth(self: Fraction): Bool {
+    return truth(self.x)   // Defers to the definition of Int's Truthiness
+}
