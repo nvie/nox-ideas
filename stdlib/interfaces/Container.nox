@@ -51,6 +51,6 @@ List<T> implements Container<T> {
 
 Dict<K, V> implements Container<K> {
     func contains(dict: Self, key: K): Bool {
-        return dict[key] ?= Nothing ? False : True
+        return !(dict[key] ?= Nothing)
     }
 }

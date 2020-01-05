@@ -1,10 +1,10 @@
 import { round } from math
 
 
-interface Num<T> {
-    to_number(a: Self): Float
+interface Num {
+    to_number(a: Self): Int | Float
 
-    derived to_int(a: Self): Int as {
+    to_int(a: Self): Int {
         return round(a.to_number())
     }
 }
