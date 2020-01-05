@@ -19,19 +19,33 @@
 []               // T[]
 [1, 2]           // Int[]
 ['foo', 'bar']   // String[]
-['foo', 3]       // (String | Int)[]
+['foo', 3]       // error: Invalid literal `3` in String[]
+
+// The following would be valid, though:
+type StrOrInt =
+    | Text  String
+    | Num   Int
+
+// List<StrOrInt>
+[Text 'foo', Num 3].map(
+    (?)
+        | Text s -> s
+        | Num  n -> n.to_string()
+).join(', ')
+
 
 
 // Sets are homogeneous
 #{}              // Set<T>
 #{1}             // Set<Int>
 #{'foo', 'bar'}  // Set<String>
+#{'foo', 3}      // error: Invalid literal `3` in Set<String>
 
 
 // Records
 // An "empty" record does not exist
-{ x=0, y=0 }                      // { x=Int, y=Int }
-{ foo='hello', bar=3, qux=True }  // { foo=String, bar=Int, qux=Bool }
+{ x=0, y=0 }                      // { x: Int, y: Int }
+{ foo='hello', bar=3, qux=True }  // { foo: String, bar: Int, qux: Bool }
 
 
 // Dicts have homogeneous key and value "sides"
