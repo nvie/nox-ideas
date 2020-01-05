@@ -1,5 +1,5 @@
-interface Add {
-    add(a: Self, b: Self): ????
+interface Add<T, R> {
+    add(a: Self, b: T): R
 }
 
 

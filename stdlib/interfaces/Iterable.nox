@@ -1,12 +1,22 @@
+import { repeat } from iteration
+
+
 interface Iterable<T> {
     iter(a: Self): Iterator<T>
 }
 
 
-type alias Bag<T> = Dict<T, Int>
+type Bag<T> = {
+    items: Dict<T, Int>
+}
 
-implement Bag<T> {
 
+implement Iterable<T> for Bag<T> {
+    iter(self: Bag<T>): Iterator<T> {
+        for (key, count) in self.items.pairs() {
+            yield from repeat(key, count)
+        }
+    }
 }
 
 
