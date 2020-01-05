@@ -1,0 +1,3 @@
+interface Str<T> {
+    to_string(a: T): String
+}

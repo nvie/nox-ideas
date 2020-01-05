@@ -1,0 +1,56 @@
+/**
+ * Types that implement Container can use the `in` operator, for example:
+ *
+ * Suppose
+ *
+ *     items: List<String>
+ *
+ * Then:
+ *
+ *     123 in items    // Compile error: 123 is a Number, but items is a List<String>
+ *     'foo' in items  // OK
+ *
+ */
+interface Container<T> {
+    /**
+     * An expression like:
+     *
+     *         2 in [0, 1, 2]
+     *     //       ^^^^^^^^^ Must be a type that implements Container<T>
+     *     //  ^ T
+     *
+     * Will be sugar for:
+     *
+     *     [0, 1, 2].contains(2)
+     *
+     * Which in turn is sugar for:
+     *
+     *     contains([0, 1, 2], 2)
+     *
+     */
+    contains(haystack: Self, needle: T): Bool
+}
+
+
+String implements Container<String> {
+    func contains(s: Self, needle: String): Bool {
+        return s.indexOf(needle) ?? False
+    }
+}
+
+
+
+List<T> implements Container<T> {
+    func contains(items: Self, item: T): Bool {
+        return (items)
+            | Empty -> False
+            | [x, ..rest] -> x == item || contains(rest, item)
+    }
+}
+
+
+Dict<K, V> implements Container<K> {
+    func contains(dict: Self, key: K): Bool {
+        return dict[key] ?= Nothing ? False : True
+    }
+}

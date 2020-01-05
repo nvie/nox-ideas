@@ -1,0 +1,14 @@
+type Ordering =
+    | LT
+    | EQ
+    | GT
+
+
+interface Ord requires Eq {
+    cmp(a: Self, b: Self): Ordering
+
+    derived lt(a: Self, b: Self): Bool
+    derived lte(a: Self, b: Self): Bool
+    derived gt(a: Self, b: Self): Bool
+    derived gte(a: Self, b: Self): Bool
+}

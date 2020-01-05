@@ -1,0 +1,6 @@
+import { Eq } from ./Eq
+
+
+interface Hashable<T> requires Eq<T> {
+    hash(a: T, b: T): Int
+}

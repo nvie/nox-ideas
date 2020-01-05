@@ -1,0 +1,22 @@
+interface Iterable<T> {
+    iter(a: Self): Iterator<T>
+}
+
+
+type alias Bag<T> = Dict<T, Int>
+
+implement Bag<T> {
+
+}
+
+
+func Bag(): Bag<T> {
+    return {}
+}
+
+
+@on Bag
+func add(self: Bag<T>, item: T): Bag<T> {
+    count = self.get(item) ?? 0
+    return self.set(item, count + 1)
+}

@@ -1,0 +1,7 @@
+interface Eq {
+    eq(a: Self, b: Self): Bool
+
+    derived neq(a: Self, b: Self): Bool {
+        return !eq(a, b)
+    }
+}

@@ -1,0 +1,18 @@
+interface Add {
+    add(a: Self, b: Self): ????
+}
+
+
+implement Add for Fraction {
+    func add(a: Fraction, b: Fraction): Fraction {
+        return ...
+    }
+
+    func add(a: Fraction, b: Int): Fraction {
+        return ...
+    }
+
+    func add(a: Int, b: Fraction): Fraction {
+        return ...
+    }
+}
