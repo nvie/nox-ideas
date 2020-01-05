@@ -145,3 +145,18 @@ Multi-line string literals are also template strings literals:
         –{poet.name}
     `
 
+
+## Collections
+
+There are 5 collection types in Nox: tuples, lists, sets, dicts, records.
+
+Collections are container types that allow a membership tests with the `in`
+operator.
+
+    2 in [1, 2, 3]                  // True
+    'hey' in #{ 'hello', 'world' }  // False
+    'hey' in #{ a: 'hey' }          // False
+    'hey' in #{ 'hey': 123 }        // True
+    123 in #{ '123': 'test' }       // False
+    123 in #{ 123: 'test' }         // True
+
