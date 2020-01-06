@@ -16,7 +16,7 @@ union Bool =
  * In the language, there is some special sugar to support working with Maybe<T>'s:
  *
  *   - T? is sugar for Maybe<T>
- *   - x ?? y is sugar for (x ?= Just x1) ? x1 : y
+ *   - x ?? y is sugar for (x ?= :Just x1) ? x1 : y
  */
 union Maybe T =
     | :Just T
