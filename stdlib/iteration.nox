@@ -1,48 +1,57 @@
 import { identity } from operators
 
 
-type Bool = False | True
-type Pred<T> = T => Bool
+union StrOrInt =
+    | :String String
+    | :Int Int
 
 
-func first(iterable: Iterable<T>): T? {
-  return (iterable)
-    | []       -> Nothing
-    | [x, ..]  -> Just x
+union TextOrNumber =
+    | :Text String
+    | :Number Int
+
+
+alias Pred T = T => Bool
+
+
+func first <T>(iterable: Iterable<T>): T? {
+  return iterable
+    | []       -> :Nothing
+    | [x, ..]  -> :Just x
 }
 
 
-func last(iterable: Iterable<T>): T? {
-  return (iterable)
-    | []       -> Nothing
-    | [.., x]  -> Just x
+func last <T>(iterable: Iterable<T>): T? {
+  return iterable
+    | []       -> :Nothing
+    | [.., x]  -> :Just x
 }
 
 
 export
-func all(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
-    for (item in iterable) {
-        if (!pred(item)) {
-            return False
+func all <T>(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
+    for item in iterable {
+        if !pred(item) {
+            return :False
         }
     }
-    return True
+    return :True
 }
 
 
 export
-func any(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
-    for (item in iterable) {
-        if (pred(item)) {
-            return True
+func any <T>(iterable: Iterable<T>, pred: Pred<T> = identity): Bool {
+    for item in iterable {
+        if pred(item) {
+            return :True
         }
     }
-    return False
+    return :False
 }
 
 
 export
-func contains(haystack: Iterable<T>, needle: T): Bool {
+func contains <T>(haystack: Iterable<T>, needle: T): Bool {
     // return any(haystack, curry(Operator.==, needle))
     // return any(haystack, Operator.==(?, needle))
     // return any(haystack, ? == needle)
@@ -51,16 +60,16 @@ func contains(haystack: Iterable<T>, needle: T): Bool {
 
 
 export
-generator func enumerate(iterable: Iterable<T>, start: Int = 0): Generator<(Int, T)> {
+generator func enumerate <T>(iterable: Iterable<T>, start: Int = 0): Generator<(Int, T)> {
     mut index = start
-    for (item in iterable) {
+    for item in iterable {
         yield (index++, item)
     }
 }
 
 
 export
-generator func iterate(start: T, f: T => T): Generator<T> {
+generator func iterate <T>(start: T, f: T => T): Generator<T> {
     mut x = start
     yield x
     forever {
@@ -71,14 +80,14 @@ generator func iterate(start: T, f: T => T): Generator<T> {
 
 
 export
-func count(start: Int, step: Int): Generator<Int> {
+func count (start: Int, step: Int): Generator<Int> {
     return iterate(start, x => x + step)
 }
 
 
 export
-generator func cycle(alts: Iterable<T>): Generator<T> {
-    alts = List(alts)
+generator func cycle (alts: Iterable<T>): Generator<T> {
+    alts = List alts
     mut index = 0
     forever {
         yield alts[index++]
@@ -87,15 +96,15 @@ generator func cycle(alts: Iterable<T>): Generator<T> {
 
 
 export
-func range(start: Int = 0, end: Int?, step: Int = 1): Generator<Int> {
-    if (step == 0) {
+func range (start: Int = 0, end: Int?, step: Int = 1): Generator<Int> {
+    if step == 0 {
         return repeat(start)
     }
 
     counter = count(start, step)
     return end
-        | Nothing  -> counter
-        | Just end -> {
+        | :Nothing  -> counter
+        | :Just end -> {
             pred = (step > 0)
                 ? n => n < end
                 : n => n > end
@@ -105,9 +114,9 @@ func range(start: Int = 0, end: Int?, step: Int = 1): Generator<Int> {
 
 
 export
-generator func repeat(value: T, times: Int?): Generator<T> {
+generator func repeat <T>(value: T, times: Int?): Generator<T> {
     gen = (value for _ in range())
-    if (times ?= Just n) {
+    if times ?= :Just n {
         return take(n, gen)
     } else {
         return gen
@@ -116,14 +125,14 @@ generator func repeat(value: T, times: Int?): Generator<T> {
 
 
 export
-generator func take(n: Int, iterable: Iterable<T>): Generator<T> {
+generator func take <T>(n: Int, iterable: Iterable<T>): Generator<T> {
     it = iter(iterable)
     mut counter = n
-    while (counter-- > 0) {
+    while counter-- > 0 {
         // TODO: Figure out a good hybrid syntax for when the results are
         // statements, not expressions
         result = it.next()
-        if (it.next() ?= Just value) {  // ?= as a pattern matching operator?
+        if it.next() ?= :Just value {  // ?= as a pattern matching operator?
             yield value
         } else /* (result ?= Nothing) */ {
             /* Iterable exhausted, quit early */
@@ -134,9 +143,9 @@ generator func take(n: Int, iterable: Iterable<T>): Generator<T> {
 
 
 export
-generator func takewhile(iterable: Iterable<T>, pred: Pred<T>): Generator<T> {
-    for (item in iterable) {
-        if (!pred(item)) {
+generator func takewhile <T>(iterable: Iterable<T>, pred: Pred<T>): Generator<T> {
+    for item in iterable {
+        if !pred(item) {
             return
         }
         yield item

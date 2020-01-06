@@ -1,14 +1,60 @@
+//
+// Built-in types
+//
+
+/**
+ * Boolean.
+ */
+union Bool =
+    | :False
+    | :True
+
+
+/**
+ * Maybe is the classic type to make a value optional.
+ *
+ * In the language, there is some special sugar to support working with Maybe<T>'s:
+ *
+ *   - T? is sugar for Maybe<T>
+ *   - x ?? y is sugar for (x ?= Just x1) ? x1 : y
+ */
+union Maybe T =
+    | :Just T
+    | :Nothing
+
+
+//
+// List is a built-in type, which is handled specially by the language in
+// syntax and semantics, which does not have explicit type constructors like
+// normal custom types do, but you can think of it as this definition:
+//
+union List<T> =
+  | :Empty
+  | :NonEmpty NonEmptyList<T>
+  implements (Iterable<T>)
+
+
+alias NonEmptyList<T> = ( T, List<T> )
+
+
+export
+func foldl(nel: NonEmptyList<T>, f: (R, T) => R): R {
+    (first, rest) = nel
+    return foldl(rest, f, first)
+}
+
+
 export
 func foldl(iterable: Iterable<T>, f: (R, T) => R): R? {
-    return (iterable)
-        | [] -> Nothing
-        | [head, ..tail] -> Just(foldl(tail, f, head))
+    return iterable
+        | [] -> :Nothing
+        | [head, ..tail] -> :Just foldl(tail, f, head)
 }
 
 
 export
 func foldl(iterable: Iterable<T>, f: (R, T) => R, start: R): R {
-    return (iterable)
+    return iterable
         | [] -> start
         | [head, ..tail] -> foldl(tail, f, f(start, head))
 }
@@ -16,11 +62,12 @@ func foldl(iterable: Iterable<T>, f: (R, T) => R, start: R): R {
 
 export
 func foldr(iterable: Iterable<T>, f: (T, R) => R, start: R): R {
-    return (iterable)
+    return iterable
         | [] -> start
         | [head] -> f(head, start)
         | [head, ..tail] -> f(head, foldr(tail, f, start))
 }
 
 
+// TODO: How can we determine which `foldl` is meant here?  All??
 reduce = foldl

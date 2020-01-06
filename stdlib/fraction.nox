@@ -18,7 +18,7 @@ import { gcd } from math
  *
  */
 type Fraction =
-    | Fraction { x = Int, y = Int }
+    | :Fraction { x = Int, y = Int }
     implements (Hashable, Eq, Cmp, Str, Num, Truthiness)
 //  ^^^^^^^^^^
 //  Not super sure about this syntax yet, but the core idea is that you
@@ -41,7 +41,7 @@ type Fraction =
  */
 export func Fraction(x: Int, y: Int): Fraction {
     assert(self.y != 0, 'invalid fraction')
-    return Fraction({ x, y })
+    return :Fraction (x, y)
 }
 
 
@@ -51,7 +51,7 @@ export func Fraction(x: Int, y: Int): Fraction {
 @on Fraction
 func simplify(self: Fraction): Fraction {
     common = gcd(self.x, self.y)
-    return Fraction(self.x / common, self.y / common)
+    return :Fraction { x = self.x / common, y = self.y / common }
 }
 
 

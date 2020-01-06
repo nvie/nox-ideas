@@ -42,8 +42,8 @@ String implements Container<String> {
 
 List<T> implements Container<T> {
     func contains(items: Self, item: T): Bool {
-        return (items)
-            | Empty -> False
+        return items
+            | :Empty -> :False
             | [x, ..rest] -> x == item || contains(rest, item)
     }
 }
@@ -51,6 +51,6 @@ List<T> implements Container<T> {
 
 Dict<K, V> implements Container<K> {
     func contains(dict: Self, key: K): Bool {
-        return !(dict[key] ?= Nothing)
+        return !(dict[key] ?= :Nothing)
     }
 }

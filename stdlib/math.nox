@@ -27,7 +27,7 @@ export sum = foldl(?, add, 0)
 
 
 export func gcd(x: Int, y: Int): Int {
-    while (y != 0) {
+    while y != 0 {
         (x, y) = (y, x % y)
     }
     return x
