@@ -23,6 +23,11 @@ union Maybe T =
     | :Nothing
 
 
+union Result<T, E = Error> =
+    | :Err E
+    | :Ok T
+
+
 //
 // List is a built-in type, which is handled specially by the language in
 // syntax and semantics, which does not have explicit type constructors like
