@@ -18,7 +18,7 @@ union Bool =
  *   - T? is sugar for Maybe<T>
  *   - x ?? y is sugar for (x ?= :Just x1) ? x1 : y
  */
-union Maybe T =
+union Maybe<T> =
     | :Just T
     | :Nothing
 
