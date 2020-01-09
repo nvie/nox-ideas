@@ -25,3 +25,9 @@ minus3: (x: Int) => Int = subtract(?, 3)
 
 // You can use multiple, too.  In this case that would be the same.
 subtract(?, ?) == subtract
+
+// Another example
+blacklist = #{ 'hello', 'hi', 'hey' }
+[1, 2, 3, 4].filter(? % 2 == 0)                // [2, 4]
+['hello', 'world'].drop(? in blacklist)        // ['world']
+['which', 'is', 'the', 'longest'].max(?.size)  // 'longest'
